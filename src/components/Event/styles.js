@@ -8,6 +8,10 @@ export const EventCard = styled.View`
   box-shadow: 0 4px 10px rgba(0, 0, 0, .9);
 `;
 
+export const EventLabel = styled.Text`
+  font-weight: bold;
+`;
+
 export const EventTitle = styled.Text`
   margin-bottom: 10px;
   font-size: 18px;

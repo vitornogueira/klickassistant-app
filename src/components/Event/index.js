@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Text } from 'react-native';
 import format from 'date-fns/format';
 
-import { EventCard, EventTitle, EventFooter, EventFooterLink } from './styles';
+import { EventCard, EventLabel, EventTitle, EventFooter, EventFooterLink } from './styles';
 
-export default function event({ event }) {
+export default function event({ event, navigation }) {
   const [mealExpense, setMealExpense] = useState(0);
   const [transportExpense, setTransportExpense] = useState(0);
 
@@ -25,15 +25,17 @@ export default function event({ event }) {
   return (
     <EventCard>
       <EventTitle>{event.title}</EventTitle>
-      <Text><Text style={{fontWeight: 'bold'}}>Local:</Text> {event.local}</Text>
-      <Text><Text style={{fontWeight: 'bold'}}>Início:</Text> {format(new Date(event.start_at), "d 'de' M 'de' yyyy 'às' k:mm")}</Text>
-      <Text><Text style={{fontWeight: 'bold'}}>Término:</Text> {format(new Date(event.finish_at), "d 'de' M 'de' yyyy 'às' k:mm")}</Text>
-      <Text><Text style={{fontWeight: 'bold'}}>Diária:</Text> R$ {event.budget.toFixed(2)}</Text>
-      <Text><Text style={{fontWeight: 'bold'}}>Gastos com refeição:</Text> R$ {mealExpense.toFixed(2)}</Text>
-      <Text><Text style={{fontWeight: 'bold'}}>Ainda tem pra gastar:</Text> R$ {(event.budget - mealExpense).toFixed(2)}</Text>
-      <Text><Text style={{fontWeight: 'bold'}}>Gastos com transporte:</Text> R$ {transportExpense.toFixed(2)}</Text>
+      <Text><EventLabel>Local:</EventLabel> {event.local}</Text>
+      <Text><EventLabel>Início:</EventLabel> {format(new Date(event.start_at), "d 'de' M 'de' yyyy 'às' k:mm")}</Text>
+      <Text><EventLabel>Término:</EventLabel> {format(new Date(event.finish_at), "d 'de' M 'de' yyyy 'às' k:mm")}</Text>
+      <Text><EventLabel>Diária:</EventLabel> R$ {event.budget.toFixed(2)}</Text>
+      <Text><EventLabel>Gastos com refeição:</EventLabel> R$ {mealExpense.toFixed(2)}</Text>
+      <Text><EventLabel>Ainda tem pra gastar:</EventLabel> R$ {(event.budget - mealExpense).toFixed(2)}</Text>
+      <Text><EventLabel>Gastos com transporte:</EventLabel> R$ {transportExpense.toFixed(2)}</Text>
       <EventFooter>
-        <EventFooterLink><Text style={{color: '#7863cc',fontSize: 16}}>Mais detalhes</Text></EventFooterLink>
+        <EventFooterLink onPress={() => navigation.navigate('Event', { event })}>
+          <Text style={{color: '#7863cc',fontSize: 16}}>Mais detalhes</Text>
+        </EventFooterLink>
       </EventFooter>
     </EventCard>
   );

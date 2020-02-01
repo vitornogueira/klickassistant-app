@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Text } from 'react-native';
+import { TouchableHighlight, StatusBar } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 
-import { Container, Title } from './styles';
+import { Container, Header, Content, Title, Button, ButtonText } from './styles';
 
 import api from '../../services/api';
 import Event from '../../components/Event';
@@ -35,12 +35,28 @@ export default function Dashboard({ navigation }) {
 
   return (
     <Container>
-      <Button onPress={() => navigation.openDrawer()} title="Menu">
-        <Text>Menu</Text>
-      </Button>
-      <Title>Meus próximos eventos</Title>
-      {event.id && <Event event={event} />}
-      {/* <EventFooterLink onPress={handleLogout}><Text style={{color: '#7863cc',fontSize: 27}}>Sair</Text></EventFooterLink> */}
+      <StatusBar
+        backgroundColor="transparent"
+        translucent
+        barStyle="light-content" />
+
+      <Header>
+        <TouchableHighlight onPress={() => navigation.openDrawer()} title="Menu">
+          <MaterialIcons name="menu" size={28} color="#292929" />
+        </TouchableHighlight>
+      </Header>
+
+      <Content>
+        {event.id && (
+          <>
+            <Title>Tá rolando agora</Title>
+            <Event event={event} navigation={navigation} />
+          </>
+        )}
+        <Button onPress={() => navigation.navigate('InvoiceCreate', { event })} title="Adicionar nota">
+          <ButtonText>Adicionar nota</ButtonText>
+        </Button>
+      </Content>
     </Container>
   );
 }
